@@ -12,8 +12,8 @@
         <form>
           <div :class="{on :loginWay}">
             <section class="login_message">
-              <input type="tel" maxlength="11" placeholder="手机号" v-model="phonenumber">
-              <button :disabled="!isrightphone || Time>0" :class="{right_phone_number:isrightphone}" class="get_verification" @click.prevent="sendma">{{Time>0?`(${Time}s)`:`获取验证码`}}</button>
+              <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
+              <button :disabled="!isRightphone || Time>0" :class="{right_phone_number:isRightphone}" class="get_verification" @click.prevent="sendma">{{Time>0?`(${Time}s)`:`获取验证码`}}</button>
             </section>
             <section class="login_verification">
               <input type="tel" maxlength="8" placeholder="验证码" v-model="code">
@@ -60,7 +60,7 @@
     data () {
       return {
         loginWay:true,
-        phonenumber:'',
+        phone:'',
         Time:0,
         name:'',
         password:'',
@@ -70,13 +70,13 @@
       }
     },
     computed: {
-      isrightphone(){
-        return /^1\d{10}$/.test(this.phonenumber) 
+      isRightphone(){
+        return /^1\d{10}$/.test(this.phone) 
       },
       
     },
     methods: {
-      sendma(){
+      async sendma(){
         this.Time =30
         const intervalId = setInterval(()=>{
           this.Time--
@@ -84,12 +84,21 @@
             clearInterval(intervalId)
           }
         },1000)
+        const result = await reqSendCode(this.phone) // {code: 0}  {code: 1: msg: ''}
+        if(result.code===0) { // 短信发送成功
+          alert('验证码发送成功')
+        } else { // 短信发送失败
+          alert(result.msg)
+          // 停止计时
+          this.computeTime = 0
+        }
       },
+      
       async login(){
-        const {phonenumber,name,password,captcha,showpwd,loginWay,code} =this
+        const {phone,name,password,captcha,showpwd,loginWay,code} =this
         let result
           if(loginWay) { // 短信
-          if(!isRightPhone) {
+          if(!isRightphone) {
             alert('必须输入正确的手机号')
             return
           } else if (!/^\d{4}$/.test(code)) {
