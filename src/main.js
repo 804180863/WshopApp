@@ -6,6 +6,7 @@ import ShopList from './components/ShopList/ShopList.vue'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Star from './components/Star/Star.vue'
 import store from './store'
+import './mock/mockServer'  // mockServer.js会被打包执行一次
 
 // require styles
 import 'swiper/dist/css/swiper.css'
