@@ -10,9 +10,6 @@ import {
     reqCategorys
   } from '../../api'
   
-  /*
-  包含n个状态数据的对象
-   */
   const state = {
     latitude: 40.10038, // 纬度
     longitude: 116.36867, // 经度
