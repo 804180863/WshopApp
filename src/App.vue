@@ -11,16 +11,15 @@ export default {
   components: {
     FooterGuide
   },
-  mounted () {
-      this.$store.dispatch('getAddress')
-     // 触发vuex的getUser(), 从后台获取user
-      this.$store.dispatch('getUser')
+  mounted() {
+    this.$store.dispatch('getAddress')
+    // 触发vuex的getUser(), 从后台获取user
+    this.$store.dispatch('getUser')
   }
-  
-  
+
+
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-
 </style>
