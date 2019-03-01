@@ -5,7 +5,8 @@ import {
     RECEIVE_RATINGS,
     RECEIVE_GOODS,
     REDUCE_FOOD_COUNT,
-    ADD_FOOD_COUNT
+    ADD_FOOD_COUNT,
+    CLEAR_CART
   } from '../mutation-types'
   
   import {
@@ -21,6 +22,7 @@ import {
     goods: [], // 商品列表
     ratings: [], // 商家评价列表
     info: {}, // 商家信息
+    cartFoods:[],//购物车food数组
     
   }
   
@@ -41,13 +43,25 @@ import {
         food.count++
       } else { 
         Vue.set(food, 'count', 1)
+        //将food添加到购物车中（cartfoods）
+        state.cartFoods.push(food)
       }
     },
     [REDUCE_FOOD_COUNT](state, {food}) {
       if(food.count>0) {
         food.count--
+        //当food减少为0时将其从购物车中移除
+        if(food.count===0){
+          const index =state.cartFoods.indexOf(food)
+          state.cartFoods.splice(index,1)
+        }
+        
       }
     },
+    [CLEAR_CART](state){
+      state.cartFoods.forEach(food => food.count =0)
+      state.cartFoods =[]
+    }
   }
   
   const actions = {
@@ -87,11 +101,33 @@ import {
       } else {
         commit(REDUCE_FOOD_COUNT, {food})
       }
+    },
+    clearCart({commit}){
+      commit(CLEAR_CART)
     }
 
   }
   
-  const getters = {}
+  const getters = {
+    // cartFoods(state){
+    //   const arr =[]
+    //   state.goods.arr.forEach(good => {
+    //     good.foods.forEach(food=>{
+    //       if(food.count>0){
+    //         arr.push(food)
+    //       }
+    //     })
+    //   });
+    //   return arr
+    // }
+    totalCount(state){
+      return state.cartFoods.reduce((preTotal,item)=> preTotal + item.count,0)
+    },
+    //总价格
+    totalPrice(state){
+      return state.cartFoods.reduce((preTotal,item)=> preTotal + item.count*item.price,0)
+    }
+  }
   
   export default {
     state,

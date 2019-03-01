@@ -40,8 +40,10 @@
           </li>
         </ul>
       </div>
+      <ShopCart/>
     </div> <!--标签对象就是组件对象-->
     <Food :food="food" ref="food"/>
+    
   </div>
  
 </template>

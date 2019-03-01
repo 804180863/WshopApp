@@ -11,6 +11,8 @@
       if ('addEventListener' in document) {
         document.addEventListener('DOMContentLoaded', function() {
           FastClick.attach(document.body);
+          window.addEventListener('touchmove', (e)=>{e.preventDefault} , { passive: false })
+          window.addEventListener('dblclick', (e)=>{e.preventDefault} , { passive: false })
         }, false);
       }
       if(!window.Promise) {
