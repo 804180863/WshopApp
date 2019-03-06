@@ -1,102 +1,123 @@
 <template>
- <section class="profile">
-       <Header title="我的"></Header>
-        <section class="profile-number">
-          <a href="javascript:" class="profile-link">
-            <div class="profile_image">
-              <i class="iconfont icon-person"></i>
-            </div>
-            <div class="user-info">
-              <p class="user-info-top">登录/注册</p>
-              <p>
-                <span class="user-icon">
-                  <i class="iconfont icon-shouji icon-mobile"></i>
-                </span>
-                <span class="icon-mobile-number">暂无绑定手机号</span>
-              </p>
-            </div>
-            <span class="arrow">
-              <i class="iconfont icon-jiantou1"></i>
+  <div class="profile">
+    <Header title="我的"/>
+    <section class="profile-number" @click="$router.push(user._id ? '/user_info' : '/login')">
+      <a href="javascript:" class="profile-link">
+        <div class="profile_image">
+          <i class="iconfont icon-person"></i>
+        </div>
+        <div class="user-info">
+          <p class="user-info-top" v-show="!user.phone">
+            {{user.name ? user.name : '登录/注册'}}
+          </p>
+          <p v-show="!user.name">
+            <span class="user-icon">
+              <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
-          </a>
-        </section>
-        <section class="profile_info_data border-1px">
-          <ul class="info_data_list">
-            <a href="javascript:" class="info_data_link">
-              <span class="info_data_top"><span>0.00</span>元</span>
-              <span class="info_data_bottom">我的余额</span>
-            </a>
-            <a href="javascript:" class="info_data_link">
-              <span class="info_data_top"><span>0</span>个</span>
-              <span class="info_data_bottom">我的优惠</span>
-            </a>
-            <a href="javascript:" class="info_data_link">
-              <span class="info_data_top"><span>0</span>分</span>
-              <span class="info_data_bottom">我的积分</span>
-            </a>
-          </ul>
-        </section>
-        <section class="profile_my_order border-1px">
-          <!-- 我的订单 -->
-          <a href='javascript:' class="my_order">
+            <span class="icon-mobile-number">
+              {{user.phone ? user.phone : '未绑定手机号'}}
+            </span>
+          </p>
+        </div>
+        <span class="arrow">
+          <i class="iconfont icon-jiantou1"></i>
+        </span>
+      </a>
+    </section>
+    <section class="profile_info_data border-1px">
+      <ul class="info_data_list">
+        <a href="javascript:" class="info_data_link">
+          <span class="info_data_top"><span>0.00</span>元</span>
+          <span class="info_data_bottom">我的余额</span>
+        </a>
+        <a href="javascript:" class="info_data_link">
+          <span class="info_data_top"><span>0</span>个</span>
+          <span class="info_data_bottom">我的优惠</span>
+        </a>
+        <a href="javascript:" class="info_data_link">
+          <span class="info_data_top"><span>0</span>分</span>
+          <span class="info_data_bottom">我的积分</span>
+        </a>
+      </ul>
+    </section>
+    <section class="profile_my_order border-1px">
+      <!-- 我的订单 -->
+      <a href='javascript:' class="my_order">
             <span>
               <i class="iconfont icon-order-s"></i>
             </span>
-            <div class="my_order_div">
-              <span>我的订单</span>
-              <span class="my_order_icon">
+        <div class="my_order_div">
+          <span>我的订单</span>
+          <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
-            </div>
-          </a>
-          <!-- 积分商城 -->
-          <a href='javascript:' class="my_order">
+        </div>
+      </a>
+      <!-- 积分商城 -->
+      <a href='javascript:' class="my_order">
             <span>
               <i class="iconfont icon-jifen"></i>
             </span>
-            <div class="my_order_div">
-              <span>积分商城</span>
-              <span class="my_order_icon">
+        <div class="my_order_div">
+          <span>积分商城</span>
+          <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
-            </div>
-          </a>
-          <!-- 硅谷外卖会员卡 -->
-          <a href="javascript:" class="my_order">
+        </div>
+      </a>
+      <!-- 硅谷外卖会员卡 -->
+      <a href="javascript:" class="my_order">
             <span>
               <i class="iconfont icon-vip"></i>
             </span>
-            <div class="my_order_div">
-              <span>硅谷外卖会员卡</span>
-              <span class="my_order_icon">
+        <div class="my_order_div">
+          <span>硅谷外卖会员卡</span>
+          <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
-            </div>
-          </a>
-        </section>
-        <section class="profile_my_order border-1px">
-          <!-- 服务中心 -->
-          <a href="javascript:" class="my_order">
+        </div>
+      </a>
+    </section>
+    <section class="profile_my_order border-1px">
+      <!-- 服务中心 -->
+      <a href="javascript:" class="my_order">
             <span>
               <i class="iconfont icon-fuwu"></i>
             </span>
-            <div class="my_order_div">
-              <span>服务中心</span>
-              <span class="my_order_icon">
+        <div class="my_order_div">
+          <span>服务中心</span>
+          <span class="my_order_icon">
                 <i class="iconfont icon-jiantou1"></i>
               </span>
-            </div>
-          </a>
-        </section>
-      </section>
-</template>
-<script>
-export default {
+        </div>
+      </a>
+    </section>
 
-}
+    <section class="profile_my_order border-1px" v-show="user._id">
+      <button @click="logout">退出登陆</button>
+    </section>
+  </div>
+</template>
+
+<script>
+  import {mapState} from 'vuex'
+  export default {
+    computed: {
+      ...mapState(['user'])
+    },
+    methods: {
+      logout () {
+        if(confirm('你确认退出吗?')) {
+          // 请求后台退出
+          this.$store.dispatch('logout')
+        }
+      }
+    }
+  }
 </script>
-<style lang="stylus" rel="stylesheet/stylus">
- @import "../../common/stylus/mixins.styl"
+
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+  @import "../../common/stylus/mixins.styl"
   .profile //我的
     width 100%
     .profile-number
