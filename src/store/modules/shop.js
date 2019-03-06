@@ -76,11 +76,12 @@ import {
   
   
     // 异步获取商家评价列表
-    async getShopRatings({commit}) {
+    async getShopRatings({commit},callback) {
       const result = await reqRatings()
       if(result.code===0) {
         const ratings = result.data
         commit(RECEIVE_RATINGS, {ratings})
+        typeof callback==='function' && callback()
       }
     },
   
@@ -109,24 +110,22 @@ import {
   }
   
   const getters = {
-    // cartFoods(state){
-    //   const arr =[]
-    //   state.goods.arr.forEach(good => {
-    //     good.foods.forEach(food=>{
-    //       if(food.count>0){
-    //         arr.push(food)
-    //       }
-    //     })
-    //   });
-    //   return arr
-    // }
     totalCount(state){
       return state.cartFoods.reduce((preTotal,item)=> preTotal + item.count,0)
     },
     //总价格
     totalPrice(state){
       return state.cartFoods.reduce((preTotal,item)=> preTotal + item.count*item.price,0)
-    }
+    },
+   // 评价总数量
+  totalRatingCount (state) {
+    return state.ratings.length
+  },
+
+  // 推荐的评价总数量
+  totalUpRatingCount (state) {
+    return state.ratings.reduce((pre, rating) => pre + (rating.rateType===0 ? 1 : 0), 0)
+  }
   }
   
   export default {

@@ -9,7 +9,8 @@ import CartControl from './components/CartControl/CartControl.vue'
 import ShopCart from './components/ShopCart/ShopCart.vue'
 import store from './store'
 import './mock/mockServer'  // mockServer.js会被打包执行一次
-
+import './filters'
+import Split from './components/Split/Split.vue'
 // require styles
 import 'swiper/dist/css/swiper.css'
 Vue.use(VueAwesomeSwiper/* { default global options } */)
@@ -18,6 +19,7 @@ Vue.component('ShopList', ShopList)
 Vue.component('Star', Star)
 Vue.component('CartControl', CartControl)
 Vue.component('ShopCart', ShopCart)
+Vue.component('Split', Split)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
